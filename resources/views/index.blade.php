@@ -14,6 +14,7 @@
       {{ session()->get('success') }}  
     </div><br />
   @endif
+  <a href="{{ url('books/create') }}" ><button class="btn btn-outline-success btn-custom-outline-success btn-custom">Agregar Libro</button></a>
   <table class="table table-striped">
     <thead>
         <tr>
@@ -36,8 +37,9 @@
                 <form action="{{ route('books.destroy', $book->id)}}" method="post">
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
+                  <button id="deleteBook" class="btn btn-danger" type="submit" onclick="deleteData({{$book->id}})" >Delete</button>
                 </form>
+                <a><button class="btn btn-danger" onclick="deleteData({{ $book->id }})" type="submit">Xelete</button></a>
             </td>
         </tr>
         @endforeach

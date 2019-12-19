@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Book;
+use Alert;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -15,6 +16,7 @@ class BookController extends Controller
     {
         //return the index view with the data fetched from the database
         $books = Book::all();
+
         return view('index', compact('books'));
     }
 
@@ -42,7 +44,7 @@ class BookController extends Controller
             'book_price' => 'required|numeric',
         ]);
         $book = Book::create($validatedData);
-   
+        Alert::message('Robots are working!');
         return redirect('/books')->with('success', 'Book is successfully saved');
     }
 
@@ -65,7 +67,6 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-
         $book = Book::findOrFail($id);
         return view('edit', compact('book'));
     }
@@ -86,7 +87,6 @@ class BookController extends Controller
         ]);
         Book::whereId($id)->update($validatedData);
         return redirect('/books')->with('success', 'Book is updated');
-
     }
 
     /**
@@ -99,7 +99,7 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
         $book->delete();
-
-        return redirect('/books')->with('success', 'Book is successfully deleted');
+        return redirect()->route('books.index')->with('success', 'Book is successfully deleted');
+//        return redirect('/books')->with('success', 'Book is successfully deleted');
     }
 }
